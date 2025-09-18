@@ -1,1 +1,245 @@
-<mat-slide-toggle>Toggle me!</mat-slide-toggle>
+<mat-card class="stepper-container">
+      <mat-card-header>
+        <mat-card-title>Multi-Step Registration Form</mat-card-title>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <mat-stepper [linear]="true" #stepper>
+          <!-- Step 1: Personal Information -->
+          <mat-step [stepControl]="personalInfoForm" [completed]="">
+            <ng-template matStepLabel>Personal Information</ng-template>
+            <form [formGroup]="personalInfoForm">
+              
+              <mat-form-field appearance="outline">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName" placeholder="Enter your first name">
+                <mat-error *ngIf="personalInfoForm.get('firstName')?.hasError('required')">
+                  First name is required
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" placeholder="Enter your last name">
+                <mat-error *ngIf="personalInfoForm.get('lastName')?.hasError('required')">
+                  Last name is required
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Date of Birth</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="personalInfoForm.get('dateOfBirth')?.hasError('required')">
+                  Date of birth is required
+                </mat-error>
+              </mat-form-field>
+              <pre>{{this.personalInfoForm.valid}}</pre>
+              <div class="step-actions">
+                <button mat-raised-button color="primary" 
+                        [disabled]="!isStep1Valid()" 
+                        matStepperNext>
+                  Next
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <!-- Step 2: Contact Information -->
+          <mat-step [stepControl]="contactInfoForm" [completed]="isStep2Valid()">
+            <ng-template matStepLabel>Contact Information</ng-template>
+            <form [formGroup]="contactInfoForm">
+              
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" placeholder="Enter your email">
+                <mat-error *ngIf="contactInfoForm.get('email')?.hasError('required')">
+                  Email is required
+                </mat-error>
+                <mat-error *ngIf="contactInfoForm.get('email')?.hasError('email')">
+                  Please enter a valid email
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Phone Number</mat-label>
+                <input matInput formControlName="phone" placeholder="Enter your phone number">
+                <mat-error *ngIf="contactInfoForm.get('phone')?.hasError('required')">
+                  Phone number is required
+                </mat-error>
+                <mat-error *ngIf="contactInfoForm.get('phone')?.hasError('pattern')">
+                  Please enter a valid phone number
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Address</mat-label>
+                <textarea matInput formControlName="address" 
+                         placeholder="Enter your address" rows="3"></textarea>
+                <mat-error *ngIf="contactInfoForm.get('address')?.hasError('required')">
+                  Address is required
+                </mat-error>
+              </mat-form-field>
+
+              <div class="step-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary" 
+                        [disabled]="!isStep2Valid()" 
+                        matStepperNext>
+                  Next
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <!-- Step 3: Professional Information -->
+          <mat-step [stepControl]="professionalInfoForm" [completed]="isStep3Valid()">
+            <ng-template matStepLabel>Professional Information</ng-template>
+            <form [formGroup]="professionalInfoForm">
+              
+              <mat-form-field appearance="outline">
+                <mat-label>Company</mat-label>
+                <input matInput formControlName="company" placeholder="Enter your company name">
+                <mat-error *ngIf="professionalInfoForm.get('company')?.hasError('required')">
+                  Company name is required
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Job Title</mat-label>
+                <input matInput formControlName="jobTitle" placeholder="Enter your job title">
+                <mat-error *ngIf="professionalInfoForm.get('jobTitle')?.hasError('required')">
+                  Job title is required
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Experience Level</mat-label>
+                <mat-select formControlName="experienceLevel">
+                  <mat-option value="entry">Entry Level</mat-option>
+                  <mat-option value="mid">Mid Level</mat-option>
+                  <mat-option value="senior">Senior Level</mat-option>
+                  <mat-option value="lead">Lead/Manager</mat-option>
+                </mat-select>
+                <mat-error *ngIf="professionalInfoForm.get('experienceLevel')?.hasError('required')">
+                  Experience level is required
+                </mat-error>
+              </mat-form-field>
+
+              <div class="step-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary" 
+                        [disabled]="!isStep3Valid()" 
+                        matStepperNext>
+                  Next
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <!-- Step 4: Preferences -->
+          <mat-step [stepControl]="preferencesForm" [completed]="isStep4Valid()">
+            <ng-template matStepLabel>Preferences</ng-template>
+            <form [formGroup]="preferencesForm">
+              
+              <mat-form-field appearance="outline">
+                <mat-label>Preferred Contact Method</mat-label>
+                <mat-select formControlName="preferredContact">
+                  <mat-option value="email">Email</mat-option>
+                  <mat-option value="phone">Phone</mat-option>
+                  <mat-option value="both">Both</mat-option>
+                </mat-select>
+                <mat-error *ngIf="preferencesForm.get('preferredContact')?.hasError('required')">
+                  Preferred contact method is required
+                </mat-error>
+              </mat-form-field>
+
+              <div class="checkbox-group">
+                <mat-checkbox formControlName="newsletter">
+                  Subscribe to newsletter
+                </mat-checkbox>
+                <mat-checkbox formControlName="promotions">
+                  Receive promotional offers
+                </mat-checkbox>
+              </div>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Additional Comments</mat-label>
+                <textarea matInput formControlName="comments" 
+                         placeholder="Any additional comments" rows="4"></textarea>
+              </mat-form-field>
+
+              <div class="step-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary" 
+                        [disabled]="!isStep4Valid()" 
+                        matStepperNext>
+                  Next
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <!-- Step 5: Review & Submit -->
+          <mat-step [stepControl]="reviewForm" [completed]="isStep5Valid()">
+            <ng-template matStepLabel>Review & Submit</ng-template>
+            <form [formGroup]="reviewForm">
+              
+              <div class="review-section">
+                <h3>Please review your information</h3>
+                
+                <div class="review-group">
+                  <h4>Personal Information</h4>
+                  <p><strong>Name:</strong> {{ getFormValue('personalInfo', 'firstName') }} {{ getFormValue('personalInfo', 'lastName') }}</p>
+                  <p><strong>Date of Birth:</strong> {{ getFormValue('personalInfo', 'dateOfBirth') | date }}</p>
+                </div>
+
+                <div class="review-group">
+                  <h4>Contact Information</h4>
+                  <p><strong>Email:</strong> {{ getFormValue('contactInfo', 'email') }}</p>
+                  <p><strong>Phone:</strong> {{ getFormValue('contactInfo', 'phone') }}</p>
+                  <p><strong>Address:</strong> {{ getFormValue('contactInfo', 'address') }}</p>
+                </div>
+
+                <div class="review-group">
+                  <h4>Professional Information</h4>
+                  <p><strong>Company:</strong> {{ getFormValue('professionalInfo', 'company') }}</p>
+                  <p><strong>Job Title:</strong> {{ getFormValue('professionalInfo', 'jobTitle') }}</p>
+                  <p><strong>Experience Level:</strong> {{ getFormValue('professionalInfo', 'experienceLevel') }}</p>
+                </div>
+
+                <div class="review-group">
+                  <h4>Preferences</h4>
+                  <p><strong>Preferred Contact:</strong> {{ getFormValue('preferences', 'preferredContact') }}</p>
+                  <p><strong>Newsletter:</strong> {{ getFormValue('preferences', 'newsletter') ? 'Yes' : 'No' }}</p>
+                  <p><strong>Promotions:</strong> {{ getFormValue('preferences', 'promotions') ? 'Yes' : 'No' }}</p>
+                </div>
+              </div>
+
+              <mat-checkbox formControlName="termsAccepted" class="terms-checkbox">
+                I accept the terms and conditions
+              </mat-checkbox>
+              <mat-error *ngIf="reviewForm.get('termsAccepted')?.hasError('required') && reviewForm.get('termsAccepted')?.touched">
+                You must accept the terms and conditions
+              </mat-error>
+
+              <div class="step-actions">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary" 
+                        [disabled]="!isStep5Valid() || isSubmitting()" 
+                        (click)="submitForm()">
+                  {{ isSubmitting() ? 'Submitting...' : 'Submit' }}
+                </button>
+              </div>
+            </form>
+          </mat-step>
+        </mat-stepper>
+
+        <!-- Success Message -->
+        <div *ngIf="isSubmitted()" class="success-message">
+          <h3>✅ Form submitted successfully!</h3>
+          <p>Thank you for completing the registration form.</p>
+        </div>
+      </mat-card-content>
+    </mat-card>

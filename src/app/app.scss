@@ -1,0 +1,67 @@
+.stepper-container {
+      max-width: 85%;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    mat-form-field {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .step-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .step-actions button + button {
+      margin-left: 10px;
+    }
+
+    .checkbox-group {
+      margin: 16px 0;
+    }
+
+    .checkbox-group mat-checkbox {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .review-section {
+      margin-bottom: 20px;
+    }
+
+    .review-group {
+      margin-bottom: 20px;
+      padding: 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+    }
+
+    .review-group h4 {
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+
+    .review-group p {
+      margin: 5px 0;
+    }
+
+    .terms-checkbox {
+      margin: 20px 0;
+    }
+
+    .success-message {
+      text-align: center;
+      padding: 40px;
+      background-color: #e8f5e8;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .success-message h3 {
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
