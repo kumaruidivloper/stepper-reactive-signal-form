@@ -64,6 +64,13 @@ export class App {
       termsAccepted: [false, Validators.requiredTrue]
     });
 
+  // also set initial values once
+  this.isStep1Valid.set(this.personalInfoForm.valid);
+  this.isStep2Valid.set(this.contactInfoForm.valid);
+  this.isStep3Valid.set(this.professionalInfoForm.valid);
+  this.isStep4Valid.set(this.preferencesForm.valid);
+  this.isStep5Valid.set(this.reviewForm.valid);
+
   // Connect forms to signals
   this.personalInfoForm.statusChanges.subscribe(() =>
     this.isStep1Valid.set(this.personalInfoForm.valid)
@@ -80,13 +87,6 @@ export class App {
   this.reviewForm.statusChanges.subscribe(() =>
     this.isStep5Valid.set(this.reviewForm.valid)
   );
-
-  // also set initial values once
-  this.isStep1Valid.set(this.personalInfoForm.valid);
-  this.isStep2Valid.set(this.contactInfoForm.valid);
-  this.isStep3Valid.set(this.professionalInfoForm.valid);
-  this.isStep4Valid.set(this.preferencesForm.valid);
-  this.isStep5Valid.set(this.reviewForm.valid);
   }
 
   
