@@ -66,3 +66,31 @@
       color: #2e7d32;
       margin-bottom: 10px;
     }
+
+
+    .step-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; // spacing between spinner and text
+}
+
+.btn-spinner {
+  width: 20px !important;
+  height: 20px !important;
+}
+button.mat-mdc-raised-button {
+  min-width: 160px; // default is 64px
+}
+
+mat-progress-spinner.mat-mdc-progress-spinner {
+    position: absolute;
+    right: -25px;
+}

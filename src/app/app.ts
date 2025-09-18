@@ -1,5 +1,5 @@
 import { Component, signal, computed } from '@angular/core';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -50,7 +50,9 @@ export class App {
     this.professionalInfoForm = this.fb.group({
       company: ['', Validators.required],
       jobTitle: ['', Validators.required],
-      experienceLevel: ['', Validators.required]
+      experienceLevel: ['', Validators.required],
+      skills: this.fb.array([this.createSkillFormGroup()]), // FormArray for skills
+      workExperience: this.fb.array([this.createWorkExperienceFormGroup()]) // FormArray for work experience
     });
 
     this.preferencesForm = this.fb.group({
@@ -91,6 +93,8 @@ export class App {
 
   
 
+  
+
   getFormValue(formName: string, fieldName: string): any {
     const forms: { [key: string]: FormGroup } = {
       personalInfo: this.personalInfoForm,
@@ -101,6 +105,16 @@ export class App {
 
     return forms[formName]?.get(fieldName)?.value || '';
   }
+
+    // Getters for FormArrays
+  get skillsArray(): FormArray {
+    return this.professionalInfoForm.get('skills') as FormArray;
+  }
+
+  get workExperienceArray(): FormArray {
+    return this.professionalInfoForm.get('workExperience') as FormArray;
+  }
+
 
   async submitForm(): Promise<void> {
     if (!this.isStep5Valid()) {
@@ -129,6 +143,58 @@ export class App {
       console.error('Form submission error:', error);
     } finally {
       this.submitting.set(false);
+    }
+  }
+
+
+  // FormArray helper methods
+  createSkillFormGroup(): FormGroup {
+    return this.fb.group({
+      skillName: ['', Validators.required],
+      level: ['', Validators.required],
+      years: [0, [Validators.required, Validators.min(0)]]
+    });
+  }
+
+  createWorkExperienceFormGroup(): FormGroup {
+    const group = this.fb.group({
+      companyName: ['', Validators.required],
+      position: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: [{ value: '', disabled: false }],
+      isCurrentJob: [false],
+      description: ['']
+    });
+
+    // Automatically disable/enable endDate when isCurrentJob changes
+    group.get('isCurrentJob')?.valueChanges.subscribe((isCurrent) => {
+      const endDateControl = group.get('endDate');
+      if (isCurrent) {
+        endDateControl?.disable({ emitEvent: false });
+      } else {
+        endDateControl?.enable({ emitEvent: false });
+      }
+    });
+    return group;
+  }
+
+  addSkill(): void {
+    this.skillsArray.push(this.createSkillFormGroup());
+  }
+
+  removeSkill(index: number): void {
+    if (this.skillsArray.length > 1) {
+      this.skillsArray.removeAt(index);
+    }
+  }
+
+  addWorkExperience(): void {
+    this.workExperienceArray.push(this.createWorkExperienceFormGroup());
+  }
+
+  removeWorkExperience(index: number): void {
+    if (this.workExperienceArray.length > 1) {
+      this.workExperienceArray.removeAt(index);
     }
   }
 }

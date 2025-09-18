@@ -2,7 +2,6 @@
       <mat-card-header style="padding-bottom: 15px">
         <mat-card-title>Multi-Step Registration Form</mat-card-title>
       </mat-card-header>
-      
       <mat-card-content>
         <mat-stepper [linear]="true" #stepper>
           <!-- Step 1: Personal Information -->
@@ -148,6 +147,127 @@
                 
               </mat-form-field>
 
+              <div class="form-array-section">
+                  <h4>Technical Skills</h4>
+                  <div formArrayName="skills">
+                    <div *ngFor="let skill of skillsArray.controls; let i = index" 
+                         [formGroupName]="i" class="skill-item">
+                      <div class="skill-form-row">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Skill Name</mat-label>
+                          <input matInput formControlName="skillName" placeholder="e.g. Angular">
+                          <mat-error *ngIf="skill.get('skillName')?.invalid && skill.get('skillName')?.touched">
+                            Skill name is required
+                          </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                          <mat-label>Experience Level</mat-label>
+                          <mat-select formControlName="level">
+                            <mat-option value="beginner">Beginner</mat-option>
+                            <mat-option value="intermediate">Intermediate</mat-option>
+                            <mat-option value="advanced">Advanced</mat-option>
+                            <mat-option value="expert">Expert</mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="skill.get('level')?.invalid && skill.get('level')?.touched">
+                            Experience level is required
+                          </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                          <mat-label>Years of Experience</mat-label>
+                          <input matInput type="number" formControlName="years" 
+                                 placeholder="0" min="0" max="50">
+                          <mat-error *ngIf="skill.get('years')?.invalid && skill.get('years')?.touched">
+                            Years of experience is required
+                          </mat-error>
+                        </mat-form-field>
+
+                        <button mat-icon-button color="warn" type="button"
+                                (click)="removeSkill(i)"
+                                [disabled]="skillsArray.length <= 1">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button mat-raised-button type="button" color="accent" 
+                          (click)="addSkill()" class="add-skill-btn">
+                    <mat-icon>add</mat-icon>
+                    Add Another Skill
+                  </button>
+                </div>
+
+              <div class="form-array-section">
+                  <h4>Work Experience</h4>
+                  <div formArrayName="workExperience">
+                    <div *ngFor="let experience of workExperienceArray.controls; let i = index" 
+                         [formGroupName]="i" class="experience-item">
+                      <div class="experience-form-group">
+                        <div class="form-row">
+                          <mat-form-field appearance="outline">
+                            <mat-label>Company</mat-label>
+                            <input matInput formControlName="companyName" placeholder="Company name">
+                            <mat-error *ngIf="experience.get('companyName')?.invalid && experience.get('companyName')?.touched">
+                              Company name is required
+                            </mat-error>
+                          </mat-form-field>
+
+                          <mat-form-field appearance="outline">
+                            <mat-label>Position</mat-label>
+                            <input matInput formControlName="position" placeholder="Job position">
+                            <mat-error *ngIf="experience.get('position')?.invalid && experience.get('position')?.touched">
+                              Position is required
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="form-row">
+                          <mat-form-field appearance="outline">
+                            <mat-label>Start Date</mat-label>
+                            <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+                            <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #startPicker></mat-datepicker>
+                            <mat-error *ngIf="experience.get('startDate')?.invalid && experience.get('startDate')?.touched">
+                              Start date is required
+                            </mat-error>
+                          </mat-form-field>
+
+                          <mat-form-field appearance="outline">
+                              <mat-label>End Date</mat-label>
+                              <input matInput [matDatepicker]="endPicker" formControlName="endDate">
+                              <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+                              <mat-datepicker #endPicker></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+
+                        <mat-checkbox formControlName="isCurrentJob">
+                          This is my current job
+                        </mat-checkbox>
+
+                        <mat-form-field appearance="outline">
+                          <mat-label>Job Description</mat-label>
+                          <textarea matInput formControlName="description" 
+                                   placeholder="Describe your role and responsibilities" rows="3"></textarea>
+                        </mat-form-field>
+
+                        <button mat-icon-button color="warn" type="button"
+                                (click)="removeWorkExperience(i)"
+                                [disabled]="workExperienceArray.length <= 1">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button mat-raised-button type="button" color="accent" 
+                          (click)="addWorkExperience()" class="add-experience-btn">
+                    <mat-icon>add</mat-icon>
+                    Add Work Experience
+                  </button>
+                </div>
+
               <div class="step-actions">
                 <button matButton="tonal" matStepperPrevious>Back</button>
                 <button mat-raised-button color="primary" 
@@ -230,6 +350,8 @@
                   <p><strong>Company:</strong> {{ getFormValue('professionalInfo', 'company') }}</p>
                   <p><strong>Job Title:</strong> {{ getFormValue('professionalInfo', 'jobTitle') }}</p>
                   <p><strong>Experience Level:</strong> {{ getFormValue('professionalInfo', 'experienceLevel') }}</p>
+                  <p><strong>Skills:</strong> {{ skillsArray.value | json }}</p>
+                  <p><strong>Work Experience:</strong> {{ workExperienceArray.value | json }}</p>
                 </div>
 
                 <div class="review-group">
@@ -248,13 +370,24 @@
               </mat-error>
 
               <div class="step-actions">
-                <button matButton="tonal" matStepperPrevious>Back</button>
-                <button mat-raised-button color="primary" 
-                        [disabled]="!isStep5Valid() || isSubmitting()" 
-                        (click)="submitForm()">
-                  {{ isSubmitting() ? 'Submitting...' : 'Submit' }}
-                </button>
-              </div>
+  <button matButton="tonal" matStepperPrevious>Back</button>
+
+  <button mat-raised-button color="primary" [disabled]="!isStep5Valid() || isSubmitting()" (click)="submitForm()">
+    
+    <ng-template #submitText>
+      Submit
+    </ng-template>
+    <ng-container *ngIf="isSubmitting(); else submitText">
+      <mat-progress-spinner 
+        diameter="20" 
+        mode="indeterminate" 
+        color="accent"
+        class="btn-spinner">
+      </mat-progress-spinner>
+      Submitting...
+    </ng-container>
+  </button>
+</div>
             </form>
           </mat-step>
         </mat-stepper>
