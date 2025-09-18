@@ -13,17 +13,21 @@
               <mat-form-field appearance="outline">
                 <mat-label>First Name</mat-label>
                 <input matInput formControlName="firstName" placeholder="Enter your first name">
-                <mat-error *ngIf="personalInfoForm.get('firstName')?.hasError('required')">
-                  First name is required
-                </mat-error>
+                @if(personalInfoForm.get('firstName')?.hasError('required')) {
+                  <mat-error>
+                      First name is required
+                  </mat-error>
+                }
               </mat-form-field>
 
               <mat-form-field appearance="outline">
                 <mat-label>Last Name</mat-label>
                 <input matInput formControlName="lastName" placeholder="Enter your last name">
-                <mat-error *ngIf="personalInfoForm.get('lastName')?.hasError('required')">
+                @if(personalInfoForm.get('lastName')?.hasError('required')) {
+                  <mat-error>
                   Last name is required
                 </mat-error>
+                }
               </mat-form-field>
 
               <mat-form-field appearance="outline">
@@ -31,9 +35,11 @@
                 <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error *ngIf="personalInfoForm.get('dateOfBirth')?.hasError('required')">
-                  Date of birth is required
-                </mat-error>
+                @if(personalInfoForm.get('dateOfBirth')?.hasError('required')) {
+                    <mat-error>
+                        Date of birth is required
+                    </mat-error>
+                }
               </mat-form-field>
               <div class="step-actions">
                 <button mat-raised-button color="primary" 
@@ -49,40 +55,49 @@
           <mat-step [stepControl]="contactInfoForm" [completed]="isStep2Valid()">
             <ng-template matStepLabel>Contact Information</ng-template>
             <form [formGroup]="contactInfoForm">
-              
               <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
                 <input matInput type="email" formControlName="email" placeholder="Enter your email">
-                <mat-error *ngIf="contactInfoForm.get('email')?.hasError('required')">
-                  Email is required
-                </mat-error>
-                <mat-error *ngIf="contactInfoForm.get('email')?.hasError('email')">
-                  Please enter a valid email
-                </mat-error>
+                @if(contactInfoForm.get('email')?.hasError('required')) {
+                  <mat-error>
+                    Email is required
+                  </mat-error>
+                }
+                @if(contactInfoForm.get('email')?.hasError('email')) {
+                  <mat-error>
+                    Please enter a valid email
+                  </mat-error>
+                }
               </mat-form-field>
 
               <mat-form-field appearance="outline">
                 <mat-label>Phone Number</mat-label>
                 <input matInput formControlName="phone" placeholder="Enter your phone number">
-                <mat-error *ngIf="contactInfoForm.get('phone')?.hasError('required')">
+                @if(contactInfoForm.get('phone')?.hasError('required')) {
+                  <mat-error>
                   Phone number is required
                 </mat-error>
-                <mat-error *ngIf="contactInfoForm.get('phone')?.hasError('pattern')">
-                  Please enter a valid phone number
-                </mat-error>
+                }
+                @if(contactInfoForm.get('phone')?.hasError('pattern')) {
+                  <mat-error>
+                    Please enter a valid phone number
+                  </mat-error>
+                }
               </mat-form-field>
 
               <mat-form-field appearance="outline">
                 <mat-label>Address</mat-label>
                 <textarea matInput formControlName="address" 
                          placeholder="Enter your address" rows="3"></textarea>
-                <mat-error *ngIf="contactInfoForm.get('address')?.hasError('required')">
-                  Address is required
-                </mat-error>
+                @if(contactInfoForm.get('address')?.hasError('required')) {
+                  <mat-error>
+                    Address is required
+                  </mat-error>
+                }
               </mat-form-field>
 
               <div class="step-actions">
-                <button mat-button matStepperPrevious>Back</button>
+                <button matButton="tonal" matStepperPrevious>Back</button>
                 <button mat-raised-button color="primary" 
                         [disabled]="!isStep2Valid()" 
                         matStepperNext>
@@ -100,17 +115,21 @@
               <mat-form-field appearance="outline">
                 <mat-label>Company</mat-label>
                 <input matInput formControlName="company" placeholder="Enter your company name">
-                <mat-error *ngIf="professionalInfoForm.get('company')?.hasError('required')">
-                  Company name is required
-                </mat-error>
+                @if(professionalInfoForm.get('company')?.hasError('required')) {
+                  <mat-error>
+                    Company name is required
+                  </mat-error>
+                }
               </mat-form-field>
 
               <mat-form-field appearance="outline">
                 <mat-label>Job Title</mat-label>
                 <input matInput formControlName="jobTitle" placeholder="Enter your job title">
-                <mat-error *ngIf="professionalInfoForm.get('jobTitle')?.hasError('required')">
-                  Job title is required
-                </mat-error>
+                @if(professionalInfoForm.get('jobTitle')?.hasError('required')) {
+                  <mat-error *ngIf="professionalInfoForm.get('jobTitle')?.hasError('required')">
+                    Job title is required
+                  </mat-error>
+                }
               </mat-form-field>
 
               <mat-form-field appearance="outline">
@@ -121,13 +140,16 @@
                   <mat-option value="senior">Senior Level</mat-option>
                   <mat-option value="lead">Lead/Manager</mat-option>
                 </mat-select>
-                <mat-error *ngIf="professionalInfoForm.get('experienceLevel')?.hasError('required')">
-                  Experience level is required
-                </mat-error>
+                @if(professionalInfoForm.get('experienceLevel')?.hasError('required')) {
+                  <mat-error>
+                    Experience level is required
+                  </mat-error>
+                }
+                
               </mat-form-field>
 
               <div class="step-actions">
-                <button mat-button matStepperPrevious>Back</button>
+                <button matButton="tonal" matStepperPrevious>Back</button>
                 <button mat-raised-button color="primary" 
                         [disabled]="!isStep3Valid()" 
                         matStepperNext>
@@ -149,9 +171,11 @@
                   <mat-option value="phone">Phone</mat-option>
                   <mat-option value="both">Both</mat-option>
                 </mat-select>
-                <mat-error *ngIf="preferencesForm.get('preferredContact')?.hasError('required')">
-                  Preferred contact method is required
-                </mat-error>
+                @if(preferencesForm.get('preferredContact')?.hasError('required')) {
+                  <mat-error>
+                    Preferred contact method is required
+                  </mat-error>
+                }
               </mat-form-field>
 
               <div class="checkbox-group">
@@ -170,7 +194,7 @@
               </mat-form-field>
 
               <div class="step-actions">
-                <button mat-button matStepperPrevious>Back</button>
+                <button matButton="tonal" matStepperPrevious>Back</button>
                 <button mat-raised-button color="primary" 
                         [disabled]="!isStep4Valid()" 
                         matStepperNext>
@@ -224,7 +248,7 @@
               </mat-error>
 
               <div class="step-actions">
-                <button mat-button matStepperPrevious>Back</button>
+                <button matButton="tonal" matStepperPrevious>Back</button>
                 <button mat-raised-button color="primary" 
                         [disabled]="!isStep5Valid() || isSubmitting()" 
                         (click)="submitForm()">
@@ -236,9 +260,11 @@
         </mat-stepper>
 
         <!-- Success Message -->
-        <div *ngIf="isSubmitted()" class="success-message">
+        @if(isSubmitted()) {
+          <div class="success-message">
           <h3>✅ Form submitted successfully!</h3>
           <p>Thank you for completing the registration form.</p>
         </div>
+        }
       </mat-card-content>
     </mat-card>
