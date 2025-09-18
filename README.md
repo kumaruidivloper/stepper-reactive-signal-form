@@ -40,3 +40,6 @@ npx -p @angular/cli@17 ng new stepper-reactive-signal-form --no-standalone --rou
 
 ## Run the server
 ng serve --host 0.0.0.0 --port 4200
+
+## install Angular Material
+ng add @angular/material
