@@ -125,7 +125,7 @@
                 <mat-label>Job Title</mat-label>
                 <input matInput formControlName="jobTitle" placeholder="Enter your job title">
                 @if(professionalInfoForm.get('jobTitle')?.hasError('required')) {
-                  <mat-error *ngIf="professionalInfoForm.get('jobTitle')?.hasError('required')">
+                  <mat-error>
                     Job title is required
                   </mat-error>
                 }
@@ -150,15 +150,17 @@
               <div class="form-array-section">
                   <h4>Technical Skills</h4>
                   <div formArrayName="skills">
-                    <div *ngFor="let skill of skillsArray.controls; let i = index" 
-                         [formGroupName]="i" class="skill-item">
+                    @for (skill of skillsArray.controls; track $index) {
+                    <div [formGroupName]="$index" class="skill-item">
                       <div class="skill-form-row">
                         <mat-form-field appearance="outline">
                           <mat-label>Skill Name</mat-label>
                           <input matInput formControlName="skillName" placeholder="e.g. Angular">
-                          <mat-error *ngIf="skill.get('skillName')?.invalid && skill.get('skillName')?.touched">
-                            Skill name is required
-                          </mat-error>
+                          @if(skill.get('skillName')?.invalid && skill.get('skillName')?.touched) {
+                              <mat-error>
+                                Skill name is required
+                              </mat-error>
+                          }
                         </mat-form-field>
 
                         <mat-form-field appearance="outline">
@@ -169,27 +171,33 @@
                             <mat-option value="advanced">Advanced</mat-option>
                             <mat-option value="expert">Expert</mat-option>
                           </mat-select>
-                          <mat-error *ngIf="skill.get('level')?.invalid && skill.get('level')?.touched">
-                            Experience level is required
-                          </mat-error>
+                          @if(skill.get('level')?.invalid && skill.get('level')?.touched) {
+                            <mat-error>
+                              Experience level is required
+                            </mat-error>
+                          }
+                          
                         </mat-form-field>
 
                         <mat-form-field appearance="outline">
                           <mat-label>Years of Experience</mat-label>
                           <input matInput type="number" formControlName="years" 
                                  placeholder="0" min="0" max="50">
-                          <mat-error *ngIf="skill.get('years')?.invalid && skill.get('years')?.touched">
-                            Years of experience is required
-                          </mat-error>
+                          @if(skill.get('years')?.invalid && skill.get('years')?.touched) {
+                              <mat-error>
+                                Years of experience is required
+                              </mat-error>
+                          }
                         </mat-form-field>
 
                         <button mat-icon-button color="warn" type="button"
-                                (click)="removeSkill(i)"
+                                (click)="removeSkill($index)"
                                 [disabled]="skillsArray.length <= 1">
                           <mat-icon>delete</mat-icon>
                         </button>
                       </div>
                     </div>
+                  }
                   </div>
 
                   <button mat-raised-button type="button" color="accent" 
@@ -202,24 +210,28 @@
               <div class="form-array-section">
                   <h4>Work Experience</h4>
                   <div formArrayName="workExperience">
-                    <div *ngFor="let experience of workExperienceArray.controls; let i = index" 
-                         [formGroupName]="i" class="experience-item">
+                  @for (experience of workExperienceArray.controls; track $index) {
+                    <div [formGroupName]="$index" class="experience-item">
                       <div class="experience-form-group">
                         <div class="form-row">
                           <mat-form-field appearance="outline">
                             <mat-label>Company</mat-label>
                             <input matInput formControlName="companyName" placeholder="Company name">
-                            <mat-error *ngIf="experience.get('companyName')?.invalid && experience.get('companyName')?.touched">
-                              Company name is required
-                            </mat-error>
+                            @if(experience.get('companyName')?.invalid && experience.get('companyName')?.touched) {
+                                <mat-error>
+                                    Company name is required
+                                </mat-error>
+                            }
                           </mat-form-field>
 
                           <mat-form-field appearance="outline">
                             <mat-label>Position</mat-label>
                             <input matInput formControlName="position" placeholder="Job position">
-                            <mat-error *ngIf="experience.get('position')?.invalid && experience.get('position')?.touched">
-                              Position is required
-                            </mat-error>
+                            @if(experience.get('position')?.invalid && experience.get('position')?.touched) {
+                                <mat-error>
+                                  Position is required
+                                </mat-error>
+                            }
                           </mat-form-field>
                         </div>
 
@@ -229,9 +241,11 @@
                             <input matInput [matDatepicker]="startPicker" formControlName="startDate">
                             <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
                             <mat-datepicker #startPicker></mat-datepicker>
-                            <mat-error *ngIf="experience.get('startDate')?.invalid && experience.get('startDate')?.touched">
-                              Start date is required
-                            </mat-error>
+                            @if(experience.get('startDate')?.invalid && experience.get('startDate')?.touched) {
+                                <mat-error>
+                                  Start date is required
+                                </mat-error>
+                            }
                           </mat-form-field>
 
                           <mat-form-field appearance="outline">
@@ -253,12 +267,13 @@
                         </mat-form-field>
 
                         <button mat-icon-button color="warn" type="button"
-                                (click)="removeWorkExperience(i)"
+                                (click)="removeWorkExperience($index)"
                                 [disabled]="workExperienceArray.length <= 1">
                           <mat-icon>delete</mat-icon>
                         </button>
                       </div>
                     </div>
+                  }
                   </div>
 
                   <button mat-raised-button type="button" color="accent" 
@@ -365,27 +380,30 @@
               <mat-checkbox formControlName="termsAccepted" class="terms-checkbox">
                 I accept the terms and conditions
               </mat-checkbox>
-              <mat-error *ngIf="reviewForm.get('termsAccepted')?.hasError('required') && reviewForm.get('termsAccepted')?.touched">
-                You must accept the terms and conditions
-              </mat-error>
-
+              @if(reviewForm.get('termsAccepted')?.hasError('required') && reviewForm.get('termsAccepted')?.touched) {
+                  <mat-error>
+                      You must accept the terms and conditions
+                  </mat-error>
+              }
               <div class="step-actions">
   <button matButton="tonal" matStepperPrevious>Back</button>
 
-  <button mat-raised-button color="primary" [disabled]="!isStep5Valid() || isSubmitting()" (click)="submitForm()">
-    
-    <ng-template #submitText>
-      Submit
-    </ng-template>
-    <ng-container *ngIf="isSubmitting(); else submitText">
-      <mat-progress-spinner 
-        diameter="20" 
-        mode="indeterminate" 
-        color="accent"
-        class="btn-spinner">
-      </mat-progress-spinner>
-      Submitting...
-    </ng-container>
+  <button mat-raised-button color="primary" 
+      class="submit-btn"
+      [disabled]="!isStep5Valid() || isSubmitting()" 
+      (click)="submitForm()">
+
+      @if (isSubmitting()) {
+        <mat-progress-spinner 
+          diameter="20" 
+          mode="indeterminate" 
+          color="accent"
+          class="btn-spinner">
+        </mat-progress-spinner>
+        Submitting...
+      } @else {
+        Submit
+      }
   </button>
 </div>
             </form>
