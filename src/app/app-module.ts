@@ -3,10 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { SharedModule } from './shared/shared-module';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
+import { ContactsListComponent } from './components/contacts-list/contacts-list';
+import { AddContactComponent } from './components/add-contact/add-contact';
 
 @NgModule({
   declarations: [
-    App
+    App,
+    ContactsListComponent,
+    AddContactComponent
   ],
   imports: [
     BrowserModule,

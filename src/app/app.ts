@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './app.scss'
 })
 export class App {
-  protected title = 'stepper-reactive-signal-form';
+  protected title = 'Angular Signal CRUD';
 }
