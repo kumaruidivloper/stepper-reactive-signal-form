@@ -2,9 +2,9 @@
   <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>My Contact</span>
+  <span>My Contacts ({{ totalContacts() }})</span>
   <span class="example-spacer"></span>
-  <button mat-icon-button routerLink="/add">
+  <button mat-icon-button routerLink="/add" [disabled]="maxReached()">
     <mat-icon>add_circle</mat-icon>
   </button>
   <!-- <button matIconButton class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">

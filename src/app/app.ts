@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
+import { ContactsService } from './services/contacts';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +10,19 @@ import { Component } from '@angular/core';
 })
 export class App {
   protected title = 'Angular Signal CRUD';
+
+  contactService = inject(ContactsService);
+  totalContacts = inject(ContactsService).totalContacts;
+  maxReached = this.contactService.maxReached;
+
+  snackbar = inject(MatSnackBar);
+
+  constructor() {
+    effect(() => {
+      if(this.maxReached()) {
+        this.snackbar.open("You've reached your limit. Please remove some contacts before adding again!", 'Close');
+      }
+
+    })
+  }
 }

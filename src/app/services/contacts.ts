@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Contact } from '../models/contacts.model';
 import { Router } from '@angular/router';
 
@@ -27,6 +27,10 @@ export class ContactsService {
   { name: 'Ethan Thompson', phone: '457-626-2721', email: 'ethompson15@bizjournals.com' },
   { name: 'Harper Brown', phone: '735-440-1916', email: 'hbrown31@mail.com' }
   ]);
+
+  totalContacts = computed(() => this.contacts().length);
+
+  maxReached = computed(() => this.totalContacts() >= 21);
 
   constructor() {}
   router = inject(Router);
