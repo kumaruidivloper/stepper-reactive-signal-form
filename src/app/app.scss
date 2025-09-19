@@ -94,3 +94,10 @@ mat-progress-spinner.mat-mdc-progress-spinner {
     position: absolute;
     right: -25px;
 }
+
+
+/* In your component SCSS file */
+::ng-deep .mat-stepper-horizontal-line {
+  margin: 0 0 !important;    /* Center the line */
+  border-top-color: var(--mat-stepper-line-color, var(--mat-sys-outline));
+}
