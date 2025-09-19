@@ -30,7 +30,7 @@ export class ContactsService {
 
   totalContacts = computed(() => this.contacts().length);
 
-  maxReached = computed(() => this.totalContacts() >= 21);
+  maxReached = computed(() => this.totalContacts() >= 19);
 
   constructor() {}
   router = inject(Router);

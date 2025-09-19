@@ -20,7 +20,9 @@ export class App {
   constructor() {
     effect(() => {
       if(this.maxReached()) {
-        this.snackbar.open("You've reached your limit. Please remove some contacts before adding again!", 'Close');
+        this.snackbar.open("You've reached your limit. Please remove some contacts before adding again!", 'Close', {
+          duration: 5000 // closes automatically after 5 seconds
+        });
       }
 
     })
