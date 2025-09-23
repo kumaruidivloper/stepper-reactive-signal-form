@@ -1,0 +1,29 @@
+.counter-div {
+    padding: 10px;
+    border: 1px solid #000;
+    background-color: aquamarine;
+    text-align: center;
+
+    .pluse, .result, .minus {
+      display: inline-block;
+      padding: 6px 8px;
+      border: solid 1px #000;
+      margin-right: 10px;
+      font-weight: bold;
+      border-radius: 4px;
+      background-color: #875656 ;
+      color: #fff;
+      cursor: pointer;
+    }
+    .result {
+       border: none;
+       background-color: unset;
+       color: #000;
+       cursor: default;
+       
+    }
+    .minus {
+        padding: 6px 10px;
+        background-color: #875656 ;
+    }
+}

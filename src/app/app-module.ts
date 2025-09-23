@@ -3,10 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
+import { AppCounter } from './app-counter/app-counter';
+import { SignalCounter } from './signal-counter/signal-counter';
 
 @NgModule({
   declarations: [
-    App
+    App,
+    AppCounter,
+    SignalCounter
   ],
   imports: [
     BrowserModule,
